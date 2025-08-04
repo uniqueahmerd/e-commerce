@@ -1,5 +1,5 @@
-import React from "react";
-import Button from "./Button";
+import React, { lazy, Suspense } from "react";
+const Button = lazy(() => import("./Button"));
 
 const Subscribe = () => {
   const onSubmitHander = () => {
@@ -26,7 +26,9 @@ const Subscribe = () => {
           className="border border-gray-500 outline-none py-4 px-3 w-[58%]"
         />
         <div>
-          <Button label={"Subscribe"} type="submit" />
+          <Suspense fallback={<button disabled>Loading...</button>}>
+            <Button label={"Subscribe"} type="submit" />
+          </Suspense>
         </div>
       </form>
     </div>

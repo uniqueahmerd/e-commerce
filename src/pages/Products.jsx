@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContex } from "../contex/ShopContex";
 import { assets } from "../assets/assets";
-import Tittle from "../components/Tittle";
-import RelatedProducts from "../components/RelatedProducts";
+const Tittle = lazy(() => import("../components/Tittle"));
+const RelatedProducts = lazy(() => import("../components/RelatedProducts"));
 
 const Products = () => {
   const { productId } = useParams();
@@ -41,22 +41,23 @@ const Products = () => {
                 src={item}
                 key={index}
                 className="w-[24%] sm:w-full sm mb-3 flex-shrink-0 cursor-pointer"
+                loading="lazy"
               />
             ))}
           </div>
           <div className="w-full sm:w-[80%]">
-            <img className="w-full h-auto" src={image} />
+            <img className="w-full h-auto" src={image} loading="lazy" />
           </div>
         </div>
         {/* ----------- product info -------- */}
         <div className="flex-1">
           <h1 className="font-bold text-2xl mt-2">{productData.name}</h1>
           <div className="flex gap-1 mt-2 items-center">
-            <img src={assets.star_icon} className="w-3.5" />
-            <img src={assets.star_icon} className="w-3.5" />
-            <img src={assets.star_icon} className="w-3.5" />
-            <img src={assets.star_icon} className="w-3.5" />
-            <img src={assets.star_dull_icon} className="w-3.5" />
+            <img src={assets.star_icon} className="w-3.5" loading="lazy" />
+            <img src={assets.star_icon} className="w-3.5" loading="lazy" />
+            <img src={assets.star_icon} className="w-3.5" loading="lazy" />
+            <img src={assets.star_icon} className="w-3.5" loading="lazy" />
+            <img src={assets.star_dull_icon} className="w-3.5" loading="lazy" />
             <p className="ml-1">(122)</p>
           </div>
           <p className="font-bold text-2xl mt-5">
@@ -123,12 +124,15 @@ const Products = () => {
       {/* -------dispaly related products */}
       <div className="mt-30">
         <div className="text-center text-xl sm:text-2xl">
-          <Tittle text1={"RELATED"} text2={"PRODUCTS"} />
-
-          <RelatedProducts
-            category={productData.category}
-            subCategory={productData.subCategory}
-          />
+          <Suspense fallback={<div>Loading title...</div>}>
+            <Tittle text1={"RELATED"} text2={"PRODUCTS"} />
+          </Suspense>
+          <Suspense fallback={<div>Loading related products...</div>}>
+            <RelatedProducts
+              category={productData.category}
+              subCategory={productData.subCategory}
+            />
+          </Suspense>
         </div>
       </div>
     </div>

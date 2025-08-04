@@ -1,11 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import SearchBar from "./components/SearchBar";
+import React, { Suspense, lazy } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import React, { Suspense } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
+
+const Navbar = lazy(() => import("./components/Navbar"));
+const Footer = lazy(() => import("./components/Footer"));
+const SearchBar = lazy(() => import("./components/SearchBar"));
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Collection = React.lazy(() => import("./pages/Collection"));
@@ -21,8 +22,12 @@ const App = () => {
   return (
     <main className="px-4 sm:px-[4vw] md:px-[6vw]  lg:mx-16">
       <ToastContainer />
-      <Navbar />
-      <SearchBar />
+      <Suspense fallback={<div>Loading Navbar...</div>}>
+        <Navbar />
+      </Suspense>
+      <Suspense fallback={<div>Loading SearchBar...</div>}>
+        <SearchBar />
+      </Suspense>
       <ErrorBoundary>
         <Suspense fallback={<div role="status" aria-live="polite">Loading...</div>}>
           <Routes>
@@ -38,7 +43,9 @@ const App = () => {
           </Routes>
         </Suspense>
       </ErrorBoundary>
-      <Footer />
+      <Suspense fallback={<div>Loading Footer...</div>}>
+        <Footer />
+      </Suspense>
     </main>
   );
 };

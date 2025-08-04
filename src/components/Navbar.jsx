@@ -1,9 +1,9 @@
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { Link, Links, NavLink, useLocation } from "react-router-dom";
 import { ShopContex } from "../contex/ShopContex";
 
-const Navbar = () => {
+const Navbar = React.memo(() => {
   const [toggle, setToggle] = useState(false);
   const { setShowSearch, showNav, setShowNav, getCount } =
     useContext(ShopContex);
@@ -22,7 +22,7 @@ const Navbar = () => {
     <nav className="flex justify-between items-center py-5 font-medium ">
       <Link to={"/"}>
         {" "}
-        <img src={assets.logo} alt="logo" className="w-38" />{" "}
+        <img src={assets.logo} alt="logo" className="w-38" loading="lazy" />{" "}
       </Link>
 
       <ul className="sm:flex gap-6 hidden ">
@@ -50,6 +50,7 @@ const Navbar = () => {
           src={assets.search_icon}
           alt="search"
           className="w-7 cursor-pointer"
+          loading="lazy"
         />
 
         <div className="group relative">
@@ -57,6 +58,7 @@ const Navbar = () => {
             src={assets.profile_icon}
             alt="profile"
             className="w-7 cursor-pointer"
+            loading="lazy"
           />
           <div className="hidden group-focus:block sm:group-hover:block absolute right-0 pt-5">
             <div className="w-36 flex flex-col gap-2 py-3 px-5 bg-slate-100 text-gray-500 rounded">
@@ -71,7 +73,7 @@ const Navbar = () => {
           </div>
         </div>
         <Link to="/cart" className="relative">
-          <img src={assets.cart_icon} alt="cart" className="w-7" />
+          <img src={assets.cart_icon} alt="cart" className="w-7" loading="lazy" />
           <p className="bg-black p-1 leading-3 aspect-square text-white text-center rounded-full absolute -right-2 bottom-[-5px] text-[12px]">
             {getCount()}
           </p>
@@ -81,6 +83,7 @@ const Navbar = () => {
           alt="menu_icon"
           className="cursor-pointer w-7 sm:hidden"
           onClick={() => setToggle(true)}
+          loading="lazy"
         />
       </div>
       {/* navbar for smaller device  */}
@@ -94,7 +97,7 @@ const Navbar = () => {
             onClick={() => setToggle(false)}
             className="flex items-center gap-2 pt-5 pl-2 cursor-pointer"
           >
-            <img src={assets.dropdown_icon} className="h-4 rotate-180" />
+            <img src={assets.dropdown_icon} className="h-4 rotate-180" loading="lazy" />
             <p>Back</p>
           </div>
 
@@ -132,6 +135,6 @@ const Navbar = () => {
       </div>
     </nav>
   ) : null;
-};
+});
 
 export default Navbar;

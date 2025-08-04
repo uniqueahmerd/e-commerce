@@ -1,6 +1,7 @@
+import React, { lazy, Suspense } from "react";
 import { assets } from "../assets/assets";
-import Tittle from "../components/Tittle";
-import Subscribe from "../components/Subscribe";
+const Tittle = lazy(() => import("../components/Tittle"));
+const Subscribe = lazy(() => import("../components/Subscribe"));
 
 const About = () => {
   return (
@@ -8,11 +9,13 @@ const About = () => {
       {/* top-part */}
       <div>
         <div className="text-center text-xl sm:text-2xl">
-          <Tittle text1={"ABOUT"} text2={"US"} />
+          <Suspense fallback={<div>Loading title...</div>}>
+            <Tittle text1={"ABOUT"} text2={"US"} />
+          </Suspense>
         </div>
         <div className="flex flex-col sm:flex-row gap-20 sm:gap-14 mt-8 lg:items-center">
           <div className="sm:w-[40%] w-full">
-            <img src={assets.about_img} />
+            <img src={assets.about_img} loading="lazy" />
           </div>
           <div className="w-full sm:w-[50%]">
             <div className="text-gray-500 text-lg flex flex-col gap-6">
@@ -49,7 +52,9 @@ const About = () => {
       {/* down parts */}
       <div className="flex flex-col gap-3">
         <div className="text-left text-lg">
-          <Tittle text1={"WHY"} text2={"CHOOSE US"} />
+          <Suspense fallback={<div>Loading title...</div>}>
+            <Tittle text1={"WHY"} text2={"CHOOSE US"} />
+          </Suspense>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-8  ">
@@ -76,7 +81,9 @@ const About = () => {
           </div>
         </div>
 
-        <Subscribe />
+        <Suspense fallback={<div>Loading subscribe...</div>}>
+          <Subscribe />
+        </Suspense>
       </div>
     </div>
   );

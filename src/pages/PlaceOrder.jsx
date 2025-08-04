@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import Tittle from "../components/Tittle";
-import CartTotal from "../components/CartTotal";
+import React, { useContext, lazy, Suspense } from "react";
 import { assets } from "../assets/assets";
 import { ShopContex } from "../contex/ShopContex";
+const Tittle = lazy(() => import("../components/Tittle"));
+const CartTotal = lazy(() => import("../components/CartTotal"));
 
 const PlaceOrder = () => {
   const { navigate, cart, placeOrder, paymentMethod, setPaymentMethod } =
@@ -19,7 +19,9 @@ const PlaceOrder = () => {
 
       <div className=" flex flex-col gap-4 w-full sm:max-w-[480px] ">
         <div className="text-xl sm:text-2xl my-3">
-          <Tittle text1={"DELIVERY"} text2={"INFO"} />
+          <Suspense fallback={<div>Loading title...</div>}>
+            <Tittle text1={"DELIVERY"} text2={"INFO"} />
+          </Suspense>
         </div>
 
         <div className="flex gap-3">
@@ -95,10 +97,14 @@ const PlaceOrder = () => {
 
       <div className="mt-8">
         <div className="mt-8 min-w-80">
-          <CartTotal />
+          <Suspense fallback={<div>Loading total...</div>}>
+            <CartTotal />
+          </Suspense>
         </div>
         <div className="mt-12">
-          <Tittle text1={"PAYMENT"} text2={"METHOD"} />{" "}
+          <Suspense fallback={<div>Loading title...</div>}>
+            <Tittle text1={"PAYMENT"} text2={"METHOD"} />
+          </Suspense>
         </div>
 
         <div className="flex gap-3 flex-col lg:flex-row mb-5">
@@ -111,7 +117,7 @@ const PlaceOrder = () => {
                 paymentMethod === "Stripe" ? "bg-green-400" : ""
               } `}
             ></p>
-            <img src={assets.stripe_logo} className="h-5" />
+            <img src={assets.stripe_logo} className="h-5" loading="lazy" />
           </div>
           <div
             className="flex items-center gap-3 border p-2 px-3 cursor-pointer rounded"
@@ -122,7 +128,7 @@ const PlaceOrder = () => {
                 paymentMethod === "Razor" ? "bg-green-400" : ""
               } `}
             ></div>
-            <img src={assets.razorpay_logo} className="h-5" />
+            <img src={assets.razorpay_logo} className="h-5" loading="lazy" />
           </div>
           <div
             className="flex items-center gap-3 border p-2 px-3 cursor-pointer rounded"

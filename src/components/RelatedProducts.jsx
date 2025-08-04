@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import { ShopContex } from "../contex/ShopContex";
-import ProductItem from "../components/ProductItem";
+const ProductItem = lazy(() => import("../components/ProductItem"));
 
 const RelatedProducts = ({ category, subCategory }) => {
   const { products } = useContext(ShopContex);
@@ -22,17 +22,19 @@ const RelatedProducts = ({ category, subCategory }) => {
 
   return (
     <div className="my-14">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
-        {related.map((item, index) => (
-          <ProductItem
-            key={index}
-            id={item._id}
-            name={item.name}
-            image={item.image}
-            price={item.price}
-          />
-        ))}
-      </div>
+      <Suspense fallback={<div>Loading related products...</div>}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
+          {related.map((item, index) => (
+            <ProductItem
+              key={index}
+              id={item._id}
+              name={item.name}
+              image={item.image}
+              price={item.price}
+            />
+          ))}
+        </div>
+      </Suspense>
     </div>
   );
 };

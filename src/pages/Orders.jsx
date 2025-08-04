@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import React, { useContext, lazy, Suspense } from "react";
 import { ShopContex } from "../contex/ShopContex";
-import Tittle from "../components/Tittle";
+const Tittle = lazy(() => import("../components/Tittle"));
 
 const Orders = () => {
   const { lastOrder, products, currency } = useContext(ShopContex);
@@ -11,7 +11,9 @@ const Orders = () => {
   return (
     <div className="border-t border-gray-200 pt-10 mt-4">
       <div className=" text-xl mb-3 sm:text-2xl">
-        <Tittle text1={"MY"} text2={"ORDERS"} />
+        <Suspense fallback={<div>Loading title...</div>}>
+          <Tittle text1={"MY"} text2={"ORDERS"} />
+        </Suspense>
       </div>
       <div className="mt-8">
         {lastOrder &&
@@ -33,6 +35,7 @@ const Orders = () => {
                           src={product.image[0]}
                           alt={product.name}
                           className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded mb-2 sm:mb-0"
+                          loading="lazy"
                         />
                       </div>
                       <div className="flex flex-col gap-2 w-full">

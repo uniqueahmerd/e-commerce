@@ -1,19 +1,22 @@
+import React, { lazy, Suspense } from "react";
 import { assets } from "../assets/assets";
-import Tittle from "../components/Tittle";
-import Subscribe from "../components/Subscribe";
+const Tittle = lazy(() => import("../components/Tittle"));
+const Subscribe = lazy(() => import("../components/Subscribe"));
 
 const Contact = () => {
   return (
     <div className="flex flex-col border-t border-gray-300 pt-10 mt-4">
       <div className="flex flex-col gap-7">
         <div className="text-center text-xl sm:text-2xl">
-          <Tittle text1={"CONTACT"} text2={"US"} />
+          <Suspense fallback={<div>Loading title...</div>}>
+            <Tittle text1={"CONTACT"} text2={"US"} />
+          </Suspense>
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center items-center lg:items-start  sm:gap-10 ">
           {/* left side */}
           <div className="sm:w-[40%]">
-            <img src={assets.contact_img} />
+            <img src={assets.contact_img} loading="lazy" />
           </div>
           {/* right side */}
           <div className="flex flex-col gap-9  mt-9 sm:mt-16 justify-center sm:w-[400px]">
@@ -39,7 +42,9 @@ const Contact = () => {
           </div>
         </div>
         <div>
-          <Subscribe />
+          <Suspense fallback={<div>Loading subscribe...</div>}>
+            <Subscribe />
+          </Suspense>
         </div>
       </div>
     </div>

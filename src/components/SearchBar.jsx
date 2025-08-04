@@ -3,7 +3,7 @@ import { assets } from "../assets/assets";
 import { ShopContex } from "../contex/ShopContex";
 import { useLocation } from "react-router-dom";
 
-const SearchBar = () => {
+const SearchBar = React.memo(() => {
   const { search, setSearch, showSearch, setShowSearch } =
     useContext(ShopContex);
 
@@ -28,7 +28,7 @@ const SearchBar = () => {
           onChange={(event) => setSearch(event.target.value)}
           className="outline-none inline-flex flex-1 bg-inherit"
         />
-        <img src={assets.search_icon} width={25} />
+        <img src={assets.search_icon} width={25} loading="lazy" />
       </div>
 
       <img
@@ -36,9 +36,10 @@ const SearchBar = () => {
         src={assets.cross_icon}
         width={17}
         className="inline cursor-pointer"
+        loading="lazy"
       />
     </div>
   ) : undefined;
-};
+});
 
 export default SearchBar;

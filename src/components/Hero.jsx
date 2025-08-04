@@ -1,6 +1,7 @@
+import React from "react";
 import { assets } from "../assets/assets";
 
-const Hero = () => {
+const Hero = React.memo(() => {
   return (
     <div className="flex flex-col items-center sm:flex-row  border border-gray-500 ">
       {/* left side */}
@@ -21,10 +22,10 @@ const Hero = () => {
       </div>
       {/* right side */}
       <div className=" w-full sm:w-1/2">
-        <img src={assets.hero_img} alt="hero" />
+        <img src={assets.hero_img} alt="hero" loading="lazy" />
       </div>
     </div>
   );
-};
+});
 
 export default Hero;

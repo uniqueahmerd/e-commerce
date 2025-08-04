@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import Tittle from "../components/Tittle";
+import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import { ShopContex } from "../contex/ShopContex";
 import { assets } from "../assets/assets";
-import CartTotal from "../components/CartTotal";
+const Tittle = lazy(() => import("../components/Tittle"));
+const CartTotal = lazy(() => import("../components/CartTotal"));
 
 const Cart = () => {
   const { cart, products, currency, updatequantity, navigate } =
@@ -28,7 +28,9 @@ const Cart = () => {
   return (
     <div className="border-b border-gray-200 pt-10 mt-4">
       <div className=" text-xl mb-3 sm:text-2xl">
-        <Tittle text1={"YOUR"} text2={"CART"} />
+        <Suspense fallback={<div>Loading title...</div>}>
+          <Tittle text1={"YOUR"} text2={"CART"} />
+        </Suspense>
       </div>
       <div>
         {data.map((item, index) => {
@@ -41,7 +43,7 @@ const Cart = () => {
               className="py-4 border-y mb-4 text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
             >
               <div className="flex items-start gap-6">
-                <img src={productData.image[0]} className="w-16 sm:w-20" />
+                <img src={productData.image[0]} className="w-16 sm:w-20" loading="lazy" />
                 <div>
                   <p className="text-xs sm:text-md font-medium">
                     {productData.name}
@@ -75,6 +77,7 @@ const Cart = () => {
               <img
                 src={assets.bin_icon}
                 className="w-4 mr-4 sm:w-5 cursor-pointer"
+                loading="lazy"
                 onClick={() => updatequantity(item._id, item.size, 0)}
               />
             </div>
@@ -83,7 +86,9 @@ const Cart = () => {
       </div>
       <div className="flex justify-end my-20">
         <div className="w-90 sm:w-{450px}">
-          <CartTotal />
+          <Suspense fallback={<div>Loading total...</div>}>
+            <CartTotal />
+          </Suspense>
           <div className="text-end">
             <button
               className="bg-black text-white text-sm my-8 px-5 py-3"

@@ -83,7 +83,7 @@ const Login = () => {
   return (
     <>
       <div className="py-4">
-        <img src={assets.logo} alt="logo" className="w-38" />
+        <img src={assets.logo} alt="logo" className="w-38" loading="lazy" />
       </div>
 
       <div className="flex flex-col justify-center items-center gap-6 mt-24 sm:mt-36">

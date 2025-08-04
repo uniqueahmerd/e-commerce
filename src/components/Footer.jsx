@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { ShopContex } from "../contex/ShopContex";
 import { useLocation } from "react-router-dom";
 
-const Footer = () => {
+const Footer = React.memo(() => {
   const { showFooter, setShowFooter } = useContext(ShopContex);
   const location = useLocation();
 
@@ -19,7 +19,7 @@ const Footer = () => {
     <footer className="my-10 mt-36">
       <div className="flex flex-col gap-5 sm:grid grid-cols-[3fr_1fr_1fr] ">
         <div className=" max-w-lg">
-          <img src={assets.logo} alt="logo" className="w-35 mb-8" />
+          <img src={assets.logo} alt="logo" className="w-35 mb-8" loading="lazy" />
           <p className="text-base text-gray-700">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id
             debitis, corrupti illum et nihil hic architecto expedita voluptates
@@ -48,6 +48,6 @@ const Footer = () => {
       </p>
     </footer>
   ) : null;
-};
+});
 
 export default Footer;

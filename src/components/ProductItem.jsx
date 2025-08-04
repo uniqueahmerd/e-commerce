@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ShopContex } from "../contex/ShopContex";
 import { Link } from "react-router-dom";
 
-const ProductItem = ({ id, image, name, price }) => {
+const ProductItem = React.memo(({ id, image, name, price }) => {
   const { currency } = useContext(ShopContex);
 
   return (
@@ -11,6 +11,7 @@ const ProductItem = ({ id, image, name, price }) => {
         <img
           src={image[0]}
           className="transition ease-in-out hover:scale-110 "
+          loading="lazy"
         />
       </div>
       <p className="pt-3 pb-1 text-sm">{name}</p>
@@ -20,6 +21,6 @@ const ProductItem = ({ id, image, name, price }) => {
       </p>
     </Link>
   );
-};
+});
 
 export default ProductItem;

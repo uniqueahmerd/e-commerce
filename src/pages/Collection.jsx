@@ -1,9 +1,8 @@
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, lazy, Suspense } from "react";
 import { assets } from "../assets/assets";
-// import { products } from "../assets/assets";
-import Tittle from "../components/Tittle";
-import ProductItem from "../components/ProductItem";
 import { ShopContex } from "../contex/ShopContex";
+const Tittle = lazy(() => import("../components/Tittle"));
+const ProductItem = lazy(() => import("../components/ProductItem"));
 
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContex);
@@ -152,7 +151,9 @@ const Collection = () => {
 
       <div className="flex-1">
         <div className="text-center sm:text-2xl text-xl flex justify-between sm:flex-row flex-col items-center">
-          <Tittle text1={"ALL"} text2={"Collection"} />
+          <Suspense fallback={<div>Loading title...</div>}>
+            <Tittle text1={"ALL"} text2={"Collection"} />
+          </Suspense>
           {/* product sort */}
           <select
             onChange={(event) => setSortType(event.target.value)}
@@ -166,15 +167,17 @@ const Collection = () => {
 
         {/* maping the products */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-          {allCollection.map((item, index) => (
-            <ProductItem
-              key={index}
-              id={item._id}
-              image={item.image}
-              price={item.price}
-              name={item.name}
-            />
-          ))}
+          <Suspense fallback={<div>Loading products...</div>}>
+            {allCollection.map((item, index) => (
+              <ProductItem
+                key={index}
+                id={item._id}
+                image={item.image}
+                price={item.price}
+                name={item.name}
+              />
+            ))}
+          </Suspense>
         </div>
       </div>
     </div>
