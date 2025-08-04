@@ -1,20 +1,20 @@
-import React from "react";
-import Hero from "../components/Hero";
-import LatestCollection from "../components/LatestCollection";
-import BestSllers from "../components/BestSllers";
-import Policy from "../components/Policy";
-import Subscribe from "../components/Subscribe";
-import Footer from "../components/Footer";
+import React, { Suspense, lazy } from "react";
+
+const Hero = lazy(() => import("../components/Hero"));
+const LatestCollection = lazy(() => import("../components/LatestCollection"));
+const BestSllers = lazy(() => import("../components/BestSllers"));
+const Policy = lazy(() => import("../components/Policy"));
+const Subscribe = lazy(() => import("../components/Subscribe"));
 
 const Home = () => {
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <Hero />
       <LatestCollection />
       <BestSllers />
       <Policy />
       <Subscribe />
-    </div>
+    </Suspense>
   );
 };
 
